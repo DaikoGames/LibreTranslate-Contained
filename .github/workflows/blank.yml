@@ -51,6 +51,7 @@ jobs:
             ./LibreTranslate-win-arm64/python.exe -m pip install setuptools wheel
             ./LibreTranslate-win-arm64/python.exe -m pip install "numpy>=2.0.0" --only-binary=:all:
             ./LibreTranslate-win-arm64/python.exe -m pip install flask-swagger==0.2.14
+            ./LibreTranslate-win-arm64/python.exe -m pip install libretranslate
             Compress-Archive -Path "./LibreTranslate-win-arm64" -DestinationPath "./LibreTranslate-win-arm64.zip"
 
       - name: Upload Build Artifact
