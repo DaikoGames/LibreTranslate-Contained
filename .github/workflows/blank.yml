@@ -1,0 +1,63 @@
+name: Deploy to GitHub Releases
+on: 
+  schedule:
+     - cron: '30 14 * * 6' 
+  workflow_dispatch:
+     
+permissions:
+  contents: write
+
+
+   
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            runtime: win-x64
+          - os: windows-11-arm
+            runtime: win-arm64
+          - os: ubuntu-latest
+            runtime: linux-x64
+          - os: ubuntu-24.04-arm
+            runtime: linux-arm64
+          - os: macos-13
+            runtime: osx-x64
+          - os: macos-14
+            runtime: osx-arm64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Build Python with Libretranslate win-x64
+        shell: pwsh
+        if: matrix.runtime == 'win-x64'
+        run: |
+            Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.14.5/python-3.14.5-embed-amd64.zip" -OutFile "./LibreTranslate-win-x64.zip"
+            Extract-Archive -Path "./LibreTranslate-win-x64.zip" -DestinationPath "./LibreTranslate-win-x64"
+            Remove-Item "./LibreTranslate-win-x64.zip"
+            Set-Content -Path "./python314._pth" -Value 'python314.zip`n.`nimport site'
+            Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "./LibreTranslate-win-x64/get-pip.py"
+            ./LibreTranslate-win-x64/python.exe ./LibreTranslate-win-x64/get-pip.py
+            ./LibreTranslate-win-x64/python.exe -m pip install libretranslate
+            Compress-Archive -Path "./LibreTranslate-win-x64" -DestinationPath "./LibreTranslate-win-x64.zip"
+
+      - name: Build Python with Libretranslate win-arm64
+        shell: pwsh
+        if: matrix.runtime == 'win-arm64'
+        run: |
+            Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.14.0/python-3.14.0-arm64.exe" -OutFile "./LibreTranslate-win-arm64.zip"
+            Extract-Archive -Path "./LibreTranslate-win-arm64.zip" -DestinationPath "./LibreTranslate-win-arm64"
+            Remove-Item "./LibreTranslate-win-arm64.zip"
+            Set-Content -Path "./python314._pth" -Value 'python314.zip`n.`nimport site'
+            Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "./LibreTranslate-win-arm64/get-pip.py"
+            ./LibreTranslate-win-arm64/python.exe ./LibreTranslate-win-arm64/get-pip.py
+            ./LibreTranslate-win-arm64/python.exe -m pip install libretranslate
+            Compress-Archive -Path "./LibreTranslate-win-arm64" -DestinationPath "./LibreTranslate-win-arm64.zip"
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: libretranslate-${{ matrix.runtime }}
+          path: ./LibreTranslate-${{ matrix.runtime }}.zip
