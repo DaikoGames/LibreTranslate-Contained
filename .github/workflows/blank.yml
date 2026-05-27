@@ -39,7 +39,7 @@ jobs:
         shell: pwsh
         if: matrix.runtime == 'win-arm64'
         run: |
-            Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.14.0/python-3.14.0-arm64.exe" -OutFile "./LibreTranslate-win-arm64.zip"
+            Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.14.5/python-3.14.5-arm64.zip" -OutFile "./LibreTranslate-win-arm64.zip"
             Expand-Archive -Path "./LibreTranslate-win-arm64.zip" -DestinationPath "./LibreTranslate-win-arm64"
             Remove-Item "./LibreTranslate-win-arm64.zip"
             Set-Content -Path "./LibreTranslate-win-x64/python314._pth" -Value "python314.zip`r`n.`r`nLib/site-packages`r`nimport site"
