@@ -29,7 +29,7 @@ jobs:
             Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.14.5/python-3.14.5-embed-amd64.zip" -OutFile "./LibreTranslate-win-x64.zip"
             Expand-Archive -Path "./LibreTranslate-win-x64.zip" -DestinationPath "./LibreTranslate-win-x64"
             Remove-Item "./LibreTranslate-win-x64.zip"
-            Set-Content -Path "./LibreTranslate-win-x64/python314._pth" -Value 'python314.zip`n.`nimport site'
+            Set-Content -Path "./LibreTranslate-win-x64/python314._pth" -Value "python314.zip`r`n.`r`nLib/site-packages`r`nimport site"
             Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "./LibreTranslate-win-x64/get-pip.py"
             ./LibreTranslate-win-x64/python.exe ./LibreTranslate-win-x64/get-pip.py
             ./LibreTranslate-win-x64/python.exe -m pip install libretranslate
@@ -42,7 +42,7 @@ jobs:
             Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.14.0/python-3.14.0-arm64.exe" -OutFile "./LibreTranslate-win-arm64.zip"
             Expand-Archive -Path "./LibreTranslate-win-arm64.zip" -DestinationPath "./LibreTranslate-win-arm64"
             Remove-Item "./LibreTranslate-win-arm64.zip"
-            Set-Content -Path "./LibreTranslate-win-x64/python314._pth" -Value 'python314.zip`n.`nimport site'
+            Set-Content -Path "./LibreTranslate-win-x64/python314._pth" -Value "python314.zip`r`n.`r`nLib/site-packages`r`nimport site"
             Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "./LibreTranslate-win-arm64/get-pip.py"
             ./LibreTranslate-win-arm64/python.exe ./LibreTranslate-win-arm64/get-pip.py
             ./LibreTranslate-win-arm64/python.exe -m pip install libretranslate
