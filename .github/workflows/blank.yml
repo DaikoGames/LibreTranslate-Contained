@@ -41,11 +41,11 @@ jobs:
         shell: pwsh
         if: matrix.runtime == 'win-arm64'
         run: |
-            Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.14.5/python-3.14.5-embed-arm64.zip" -OutFile "./LibreTranslate-win-arm64.zip"
+            Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.12.9/python-3.12.9-embed-arm64.zip" -OutFile "./LibreTranslate-win-arm64.zip"
             Expand-Archive -Path "./LibreTranslate-win-arm64.zip" -DestinationPath "./LibreTranslate-win-arm64"
             Remove-Item "./LibreTranslate-win-arm64.zip"
-            $pthContent = "python314.zip`n.`nLibreTranslate-win-arm64\Lib\site-packages`nimport site"
-            Set-Content -Path "./LibreTranslate-win-arm64/python314._pth" -Value $pthContent
+            $pthContent = "python312.zip`n.`nLibreTranslate-win-arm64\Lib\site-packages`nimport site"
+            Set-Content -Path "./LibreTranslate-win-arm64/python312._pth" -Value $pthContent
             Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "./LibreTranslate-win-arm64/get-pip.py"
             ./LibreTranslate-win-arm64/python.exe ./LibreTranslate-win-arm64/get-pip.py
             ./LibreTranslate-win-arm64/python.exe -m pip install setuptools wheel
